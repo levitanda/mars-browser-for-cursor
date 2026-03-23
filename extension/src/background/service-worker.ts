@@ -1,7 +1,7 @@
 import { extensionMessageSchema, mcpRequestSchema, type MCPResponse } from "@mars/shared";
 
 const NATIVE_HOST = "com.mars.browser_bridge";
-let port: chrome.runtime.Port | null = null;
+let port: any = null;
 let lastStatus: { connected: boolean; version?: string } = { connected: false };
 let selectedTabId: number | null = null;
 
