@@ -1,0 +1,10 @@
+<!doctype html><html><body>
+<h1>QA Demo</h1>
+<form id="signup"><input id="email" type="email" required /><button>Save</button></form>
+<button id="open">Open modal</button><div id="modal" hidden>Checkout modal <button id="close">x</button></div>
+<table><tr><th>Plan</th><th>Price</th></tr><tr><td>Basic</td><td>$10</td></tr></table>
+<script>
+open.onclick=()=>modal.hidden=false;close.onclick=()=>modal.hidden=true;
+signup.onsubmit=(e)=>{e.preventDefault();console.warn('demo warning');console.error('demo error');fetch('/api/success');fetch('/api/fail').catch(()=>{});};
+</script>
+</body></html>

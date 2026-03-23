@@ -1,0 +1,15 @@
+{
+  "name": "@mars/extension",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node ../scripts/build-extension.mjs",
+    "dev": "node ../scripts/build-extension.mjs --watch",
+    "test": "vitest run",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@mars/shared": "workspace:*"
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mars Browser Bridge</title>
+    <link rel="stylesheet" href="../styles/ui.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Mars Browser Bridge</h1>
+      <p id="status">Checking host…</p>
+      <button id="start">Start Local Agent Bridge</button>
+      <button id="select-tab">Select tab for agent</button>
+      <button id="stop" class="danger">Emergency Stop</button>
+      <label><input type="checkbox" id="readonly"/> Read-only mode</label>
+      <label><input type="checkbox" id="approval" checked/> Approval per action</label>
+      <div>
+        <h2>Session activity</h2>
+        <ul id="logs"></ul>
+      </div>
+    </main>
+    <script type="module" src="../ui/popup.js"></script>
+  </body>
+</html>
