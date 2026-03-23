@@ -1,0 +1,23 @@
+{
+  "name": "mars-browser-for-cursor",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.10.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @mars/extension dev",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "verify:publishability": "node scripts/verify-publishability.mjs",
+    "test:integration": "node tests/integration/messaging.test.mjs",
+    "test:e2e": "node tests/e2e/demo-smoke.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}

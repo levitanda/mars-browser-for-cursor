@@ -1,0 +1,12 @@
+{
+  "name": "@mars/demo-app",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'no build'",
+    "dev": "node server.mjs",
+    "test": "node ../tests/e2e/demo-smoke.mjs",
+    "lint": "echo lint",
+    "typecheck": "echo typecheck"
+  }
+}
