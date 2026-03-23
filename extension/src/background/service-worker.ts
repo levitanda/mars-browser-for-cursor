@@ -1,4 +1,11 @@
-import { extensionMessageSchema, mcpRequestSchema, type MCPResponse } from "@mars/shared";
+type MCPResponse = {
+  id: string;
+  ok: boolean;
+  result?: Record<string, unknown>;
+  error?: { code: string; message: string; retryable?: boolean };
+  traceId: string;
+  timestamp: string;
+};
 
 const NATIVE_HOST = "com.mars.browser_bridge";
 let port: any = null;
@@ -25,44 +32,52 @@ function connectNativeHost() {
   }
 }
 
+function isObject(value: unknown): value is Record<string, any> {
+  return typeof value === "object" && value !== null;
+}
+
 if (typeof chrome !== "undefined") {
   chrome.runtime.onInstalled.addListener(() => {
     chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(console.error);
   });
 
   chrome.runtime.onMessage.addListener((raw: any, _sender: any, sendResponse: any) => {
-    const parsed = extensionMessageSchema.safeParse(raw);
-    if (!parsed.success) {
+    if (!isObject(raw) || typeof raw.type !== "string") {
       sendResponse({ ok: false, error: "INVALID_MESSAGE" });
-      return;
+      return false;
     }
 
-    const message = parsed.data;
-    if (message.type === "RUN_TOOL") {
-      const request = mcpRequestSchema.parse(message.payload);
+    if (raw.type === "RUN_TOOL") {
+      if (!isObject(raw.payload)) {
+        sendResponse({ ok: false, error: "INVALID_PAYLOAD" });
+        return false;
+      }
       if (!port) connectNativeHost();
       if (!port) {
         sendResponse({ ok: false, error: "HOST_UNAVAILABLE" });
-        return;
+        return false;
       }
-
-      port.postMessage({ ...request, selectedTabId });
+      port.postMessage({ ...raw.payload, selectedTabId });
       sendResponse({ ok: true });
+      return true;
     }
 
     if (raw.type === "SET_SELECTED_TAB") {
       selectedTabId = Number(raw.tabId);
       sendResponse({ ok: true, selectedTabId });
+      return true;
     }
 
     if (raw.type === "GET_STATUS") {
       sendResponse({ ok: true, status: lastStatus, selectedTabId });
+      return true;
     }
 
-    return true;
+    sendResponse({ ok: false, error: "UNSUPPORTED_MESSAGE" });
+    return false;
   });
 
-  chrome.tabs.onActivated.addListener(async (activeInfo: any) => {
+  chrome.tabs.onActivated.addListener((activeInfo: any) => {
     if (!selectedTabId) {
       selectedTabId = activeInfo.tabId;
     }
