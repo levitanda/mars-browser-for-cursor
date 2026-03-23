@@ -10,7 +10,7 @@ function connectNativeHost() {
   try {
     port = chrome.runtime.connectNative(NATIVE_HOST);
     lastStatus = { connected: true };
-    port.onMessage.addListener((message) => {
+    port.onMessage.addListener((message: any) => {
       chrome.runtime.sendMessage({ type: "TOOL_RESULT", payload: message });
     });
     port.onDisconnect.addListener(() => {
@@ -30,7 +30,7 @@ if (typeof chrome !== "undefined") {
     chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(console.error);
   });
 
-  chrome.runtime.onMessage.addListener((raw, _sender, sendResponse) => {
+  chrome.runtime.onMessage.addListener((raw: any, _sender: any, sendResponse: any) => {
     const parsed = extensionMessageSchema.safeParse(raw);
     if (!parsed.success) {
       sendResponse({ ok: false, error: "INVALID_MESSAGE" });
@@ -62,13 +62,13 @@ if (typeof chrome !== "undefined") {
     return true;
   });
 
-  chrome.tabs.onActivated.addListener(async (activeInfo) => {
+  chrome.tabs.onActivated.addListener(async (activeInfo: any) => {
     if (!selectedTabId) {
       selectedTabId = activeInfo.tabId;
     }
   });
 
-  chrome.runtime.onConnect.addListener((clientPort) => {
+  chrome.runtime.onConnect.addListener((clientPort: any) => {
     if (clientPort.name === "popup") {
       connectNativeHost();
       clientPort.postMessage({ type: "HOST_STATUS", ...lastStatus });
