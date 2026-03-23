@@ -1,0 +1,9 @@
+{
+  "name": "signup-and-modal",
+  "steps": [
+    { "tool": "browser.open_tab", "args": { "url": "http://localhost:3000" } },
+    { "tool": "page.type", "args": { "selector": "#email", "text": "qa@example.com" } },
+    { "tool": "page.click", "args": { "selector": "form#signup button" } },
+    { "tool": "qa.assert_console_clean", "args": {} }
+  ]
+}
