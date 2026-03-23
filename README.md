@@ -16,3 +16,10 @@ pnpm test
 ```
 
 See `docs/installation.md` and `docs/cursor-setup.md`.
+
+
+## Start using it
+- Quickstart: `docs/quickstart-usage.md`
+- MCP setup: `docs/mcp-setup.md`
+- Usage examples: `docs/usage-examples.md`
+- Start-here index: `docs/start-here.md`
