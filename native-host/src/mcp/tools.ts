@@ -10,10 +10,12 @@ export type HostState = {
 export function runTool(request: MCPRequest, state: HostState): MCPResponse {
   const policy = enforcePolicy(request, state.emergencyStop);
   if (!policy.ok) {
+    const code = policy.code ?? "POLICY_DENIED";
+    const message = policy.message ?? "Request blocked by safety policy";
     return {
       id: request.id,
       ok: false,
-      error: { code: policy.code, message: policy.message, retryable: false },
+      error: { code, message, retryable: false },
       traceId: crypto.randomUUID(),
       timestamp: new Date().toISOString()
     };

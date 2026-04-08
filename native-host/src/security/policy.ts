@@ -2,7 +2,11 @@ import type { MCPRequest } from "@mars/shared";
 
 const destructivePrefixes = ["page.click", "page.type", "page.press_key", "page.select_option", "page.check", "page.uncheck", "page.drag_and_drop", "page.upload_file_user_approved"];
 
-export function enforcePolicy(request: MCPRequest, emergencyStop: boolean) {
+export type PolicyResult =
+  | { ok: true }
+  | { ok: false; code: string; message: string };
+
+export function enforcePolicy(request: MCPRequest, emergencyStop: boolean): PolicyResult {
   if (emergencyStop) return { ok: false, code: "EMERGENCY_STOP", message: "Session stopped by user" };
   if (request.safety.readOnly && destructivePrefixes.some((prefix) => request.tool.startsWith(prefix))) {
     return { ok: false, code: "READ_ONLY", message: `Tool ${request.tool} blocked in read-only mode` };

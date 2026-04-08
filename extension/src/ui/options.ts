@@ -1,7 +1,7 @@
 const domains = document.querySelector("#domains") as HTMLTextAreaElement;
 const save = document.querySelector("#save") as HTMLButtonElement;
 
-chrome.storage.local.get(["allowDomains"]).then((r) => {
+chrome.storage.local.get(["allowDomains"]).then((r: any) => {
   domains.value = (r.allowDomains ?? []).join("\n");
 });
 

@@ -31,7 +31,7 @@ window.fetch = async (...args) => {
   return response;
 };
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message: any, _sender: any, sendResponse: any) => {
   if (message?.type === "COLLECT_PAGE_STATE") {
     sendResponse({
       url: location.href,
